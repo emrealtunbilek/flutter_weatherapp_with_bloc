@@ -55,7 +55,7 @@ class WeatherApp extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                         child: LocationWidget(
-                      secilenSehir: kullanicininSectigiSehir,
+                      secilenSehir: getirilenWeather.title,
                     )),
                   ),
                   Padding(

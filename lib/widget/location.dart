@@ -8,7 +8,7 @@ class LocationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "Ankara",
+      secilenSehir,
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
     );
   }

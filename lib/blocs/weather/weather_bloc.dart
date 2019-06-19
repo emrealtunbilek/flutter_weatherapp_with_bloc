@@ -23,6 +23,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       } catch (_) {
         yield WeatherErrorState();
       }
+    } else if (event is RefreshWeatherEvent) {
+      try {
+        final Weather getirilenWeather =
+            await weatherRepository.getWeather(event.sehirAdi);
+        yield WeatherLoadedState(weather: getirilenWeather);
+      } catch (_) {
+        yield currentState;
+      }
     }
   }
 }

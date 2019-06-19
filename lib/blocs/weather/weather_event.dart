@@ -10,3 +10,8 @@ class FetchWeatherEvent extends WeatherEvent {
   final String sehirAdi;
   FetchWeatherEvent({@required this.sehirAdi}) : super([sehirAdi]);
 }
+
+class RefreshWeatherEvent extends WeatherEvent {
+  final String sehirAdi;
+  RefreshWeatherEvent({@required this.sehirAdi}) : super([sehirAdi]);
+}

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weatherapp_with_bloc/blocs/weather/bloc.dart';
+import 'package:flutter_weatherapp_with_bloc/blocs/weather/tema/bloc.dart';
 
 import 'hava_durumu_resim.dart';
 import 'location.dart';
@@ -27,7 +28,6 @@ class WeatherApp extends StatelessWidget {
               onPressed: () async {
                 kullanicininSectigiSehir = await Navigator.push(context,
                     MaterialPageRoute(builder: (context) => SehirSecWidget()));
-                debugPrint("Seçilen sehir: " + kullanicininSectigiSehir);
                 if (kullanicininSectigiSehir != null) {
                   _weatherBloc.dispatch(
                       FetchWeatherEvent(sehirAdi: kullanicininSectigiSehir));
@@ -51,6 +51,14 @@ class WeatherApp extends StatelessWidget {
             }
             if (state is WeatherLoadedState) {
               final getirilenWeather = state.weather;
+              final _havaDurumKisaltma =
+                  getirilenWeather.consolidatedWeather[0].weatherStateAbbr;
+              /* final _temaBloc = BlocProvider.of<TemaBloc>(context);
+              _temaBloc.dispatch(event)*/
+
+              BlocProvider.of<TemaBloc>(context).dispatch(
+                  TemaDegistirEvent(havaDurumuKisaltmasi: _havaDurumKisaltma));
+
               _refreshCompleter.complete();
               _refreshCompleter = Completer();
 

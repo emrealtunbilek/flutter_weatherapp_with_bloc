@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weatherapp_with_bloc/blocs/weather/bloc.dart';
 import 'package:flutter_weatherapp_with_bloc/blocs/weather/tema/bloc.dart';
 
+import 'gecisli_arkaplan_renk.dart';
 import 'hava_durumu_resim.dart';
 import 'location.dart';
 import 'max_min_sicaklik.dart';
@@ -55,42 +56,48 @@ class WeatherApp extends StatelessWidget {
                   getirilenWeather.consolidatedWeather[0].weatherStateAbbr;
               /* final _temaBloc = BlocProvider.of<TemaBloc>(context);
               _temaBloc.dispatch(event)*/
-
+              kullanicininSectigiSehir = getirilenWeather.title;
               BlocProvider.of<TemaBloc>(context).dispatch(
                   TemaDegistirEvent(havaDurumuKisaltmasi: _havaDurumKisaltma));
 
               _refreshCompleter.complete();
               _refreshCompleter = Completer();
 
-              return RefreshIndicator(
-                onRefresh: () {
-                  _weatherBloc.dispatch(
-                      RefreshWeatherEvent(sehirAdi: kullanicininSectigiSehir));
-                  return _refreshCompleter.future;
-                },
-                child: ListView(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                          child: LocationWidget(
-                        secilenSehir: getirilenWeather.title,
-                      )),
+              return BlocBuilder(
+                bloc: BlocProvider.of<TemaBloc>(context),
+                builder: (context, TemaState temaState) => GecisliRenkContainer(
+                      renk: (temaState as UygulamaTemasi).renk,
+                      child: RefreshIndicator(
+                        onRefresh: () {
+                          _weatherBloc.dispatch(RefreshWeatherEvent(
+                              sehirAdi: kullanicininSectigiSehir));
+                          return _refreshCompleter.future;
+                        },
+                        child: ListView(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
+                                  child: LocationWidget(
+                                secilenSehir: getirilenWeather.title,
+                              )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(child: SonGuncellemeWidget()),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(child: HavaDurumuResimWidget()),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Center(child: MaxveMinSicaklikWidget()),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(child: SonGuncellemeWidget()),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(child: HavaDurumuResimWidget()),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Center(child: MaxveMinSicaklikWidget()),
-                    ),
-                  ],
-                ),
               );
             }
             if (state is WeatherErrorState) {

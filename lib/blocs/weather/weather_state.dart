@@ -2,18 +2,35 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_weatherapp_with_bloc/models/weather.dart';
 import 'package:meta/meta.dart';
 
-@immutable
 abstract class WeatherState extends Equatable {
-  WeatherState([List props = const []]) : super(props);
+  const WeatherState();
 }
 
-class InitialWeatherState extends WeatherState {}
+class InitialWeatherState extends WeatherState {
+  @override
+  List<Object> get props => [];
+}
 
-class WeatherLoadingState extends WeatherState {}
+class WeatherLoadingState extends WeatherState {
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}
 
 class WeatherLoadedState extends WeatherState {
-  final Weather weather;
-  WeatherLoadedState({@required this.weather}) : super([weather]);
+  Weather weather;
+  WeatherLoadedState({@required this.weather});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [weather];
+
+
 }
 
-class WeatherErrorState extends WeatherState {}
+class WeatherErrorState extends WeatherState {
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}
+

@@ -9,5 +9,8 @@ abstract class TemaEvent extends Equatable {
 class TemaDegistirEvent extends TemaEvent {
   final String havaDurumuKisaltmasi;
   TemaDegistirEvent({@required this.havaDurumuKisaltmasi})
-      : super([havaDurumuKisaltmasi]);
+     
+@override
+  // TODO: implement props
+  List<Object> get props => [havaDurumuKisaltmasi];
 }

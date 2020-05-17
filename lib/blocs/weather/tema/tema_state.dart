@@ -11,6 +11,9 @@ class UygulamaTemasi extends TemaState {
   final ThemeData tema;
   final MaterialColor renk;
 
-  UygulamaTemasi({@required this.tema, @required this.renk})
-      : super([tema, renk]);
+   MyThemeState({@required  this.tema,@required this.reng});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [tema,renk];
 }
